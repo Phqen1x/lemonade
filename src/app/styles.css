@@ -6134,9 +6134,6 @@ footer {
 }
 
 .save-image-button {
-    position: absolute;
-    bottom: 12px;
-    right: 12px;
     display: flex;
     align-items: center;
     gap: 6px;
@@ -6230,6 +6227,47 @@ footer {
 .image-setting input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+
+/* Image Action Buttons (below generated images) */
+.image-action-buttons {
+    display: flex;
+    gap: 6px;
+    margin-top: 8px;
+}
+
+/* Image Reference Upload */
+.image-reference-preview {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 8px;
+}
+
+.image-reference-thumb {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #333;
+}
+
+.image-reference-dropzone {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    border: 1px dashed #444;
+    border-radius: 8px;
+    color: #888;
+    font-size: 13px;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+    margin-bottom: 8px;
+}
+
+.image-reference-dropzone:hover {
+    border-color: #666;
+    color: #ccc;
 }
 
 /* ========================================
@@ -6364,9 +6402,6 @@ footer {
 }
 
 .save-image-button {
-    position: absolute;
-    bottom: 12px;
-    right: 12px;
     display: flex;
     align-items: center;
     gap: 6px;
@@ -6460,6 +6495,47 @@ footer {
 .image-setting input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+
+/* Image Action Buttons (below generated images) */
+.image-action-buttons {
+    display: flex;
+    gap: 6px;
+    margin-top: 8px;
+}
+
+/* Image Reference Upload */
+.image-reference-preview {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 8px;
+}
+
+.image-reference-thumb {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #333;
+}
+
+.image-reference-dropzone {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    border: 1px dashed #444;
+    border-radius: 8px;
+    color: #888;
+    font-size: 13px;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+    margin-bottom: 8px;
+}
+
+.image-reference-dropzone:hover {
+    border-color: #666;
+    color: #ccc;
 }
 
 /* Status Bar Styles */
