@@ -307,7 +307,7 @@ json SDServer::image_edits(const json& request) {
                   << " size=" << request.value("size", "")
                   << std::endl;
 
-    return forward_multipart_request("/v1/images/edits", fields, 600);
+    return forward_multipart_request("/v1/images/edits", fields, 1200);
 }
 
 json SDServer::image_variations(const json& request) {
@@ -315,10 +315,9 @@ json SDServer::image_variations(const json& request) {
     // Note: OpenAI variations API does NOT accept a prompt parameter.
     // The endpoint expects multipart/form-data (like the OpenAI API).
 
-    // Build extra_args with a default strength for img2img (same pattern as image_edits).
-    // strength controls denoising: 0.0 = identical to input, 1.0 = ignore input entirely.
+    // Embed inference params in prompt (same pattern as image_edits/image_generations)
+    // so the subprocess uses recipe_options defaults instead of its own compiled-in values.
     json extra_args;
-    extra_args["strength"] = 0.75;
     extra_args["steps"] = static_cast<int>(recipe_options_.get_option("steps"));
     extra_args["cfg_scale"] = static_cast<float>(recipe_options_.get_option("cfg_scale"));
 

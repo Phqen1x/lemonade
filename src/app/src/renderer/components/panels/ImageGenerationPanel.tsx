@@ -11,6 +11,12 @@ import { ImageUploadIcon } from '../Icons';
 
 type ImageMode = 'generate' | 'edit' | 'variations';
 
+const IMAGE_MODE_LABELS: Partial<Record<ImageMode, string>> = {
+  generate: 'Generate',
+  edit: 'Edit',
+  // variations: 'Variations',  // disabled until this is made functional
+};
+
 interface ImageSettings {
   steps: number;
   cfgScale: number;
@@ -380,10 +386,11 @@ const ImageGenerationPanel: React.FC<ImageGenerationPanelProps> = ({
           <label>Mode</label>
           <select value={imageMode}
             onChange={(e) => setImageMode(e.target.value as ImageMode)}
-            disabled={isBusy}>
-            <option value="generate">Generate</option>
-            <option value="edit">Edit</option>
-            <option value="variations">Variations</option>
+            disabled={isBusy}
+            style={{ width: `${Math.max(...Object.values(IMAGE_MODE_LABELS).map(l => l.length)) + 3}ch` }}>
+            {Object.entries(IMAGE_MODE_LABELS).map(([value, label]) => (
+              <option key={value} value={value}>{label}</option>
+            ))}
           </select>
         </div>
         {imageMode !== 'variations' && (
