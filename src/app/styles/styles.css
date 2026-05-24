@@ -52,6 +52,7 @@ textarea,
 .about-modal-content *,
 .model-name,
 .model-size,
+.download-error-text,
 code,
 pre {
     -webkit-user-select: text;
@@ -6052,6 +6053,10 @@ input::-webkit-calendar-picker-indicator {
 
 .download-action-btn.remove-btn:hover {
     color: var(--text-quaternary);
+}
+
+.download-action-btn.copy-btn.copied {
+    color: #4CAF50;
 }
 
 .download-progress-container {

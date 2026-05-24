@@ -35,6 +35,7 @@ const DownloadManager: React.FC<DownloadManagerProps> = ({ isVisible, onClose })
   const [expandedDownloads, setExpandedDownloads] = useState<Set<string>>(new Set());
   // Track models that are currently being deleted to prevent retry during cleanup
   const [deletingModels, setDeletingModels] = useState<Set<string>>(new Set());
+  const [copiedId, setCopiedId] = useState<string | null>(null);
 
   useEffect(() => {
     // Listen for download events from the global download tracker
@@ -306,6 +307,14 @@ const DownloadManager: React.FC<DownloadManagerProps> = ({ isVisible, onClose })
     });
   };
 
+  const handleCopyError = (download: DownloadItem) => {
+    const text = download.error || 'Unknown error';
+    navigator.clipboard.writeText(text).then(() => {
+      setCopiedId(download.id);
+      setTimeout(() => setCopiedId(null), 2000);
+    });
+  };
+
   const activeDownloads = downloads.filter(d => d.status === 'downloading').length;
   const completedDownloads = downloads.filter(d => d.status === 'completed').length;
 
@@ -415,7 +424,9 @@ const DownloadManager: React.FC<DownloadManagerProps> = ({ isVisible, onClose })
                               <>Completed • {formatBytes(download.bytesTotal)}</>
                             )}
                             {download.status === 'error' && (
-                              <>Error: {download.error || 'Unknown error'}</>
+                              <span className="download-error-text">
+                                Error: {download.error || 'Unknown error'}
+                              </span>
                             )}
                             {download.status === 'cancelled' && (
                               <>Cancelled</>
@@ -491,6 +502,24 @@ const DownloadManager: React.FC<DownloadManagerProps> = ({ isVisible, onClose })
                               <polyline points="23,4 23,10 17,10"/>
                               <path d="M20.49,15a9,9,0,1,1-2.12-9.36L23,10"/>
                             </svg>
+                          </button>
+                        )}
+                        {download.status === 'error' && (
+                          <button
+                            className={`download-action-btn copy-btn${copiedId === download.id ? ' copied' : ''}`}
+                            onClick={() => handleCopyError(download)}
+                            title={copiedId === download.id ? 'Copied!' : 'Copy error to clipboard'}
+                          >
+                            {copiedId === download.id ? (
+                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <polyline points="20,6 9,17 4,12"/>
+                              </svg>
+                            ) : (
+                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                              </svg>
+                            )}
                           </button>
                         )}
                         {(download.status === 'completed' || download.status === 'error') && (
